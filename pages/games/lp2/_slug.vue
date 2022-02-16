@@ -12,9 +12,16 @@ import { SanityContent } from "@nuxtjs/sanity/dist/components/sanity-content";
 export default {
   components: { SanityContent },
   async asyncData({ params, $sanity }) {
-    const query = groq`*[_type == "gamestemplate" && commonitems.name == "${params.slug}"][0].commonitems`;
-    const emailtemplate = await $sanity.fetch(query);
-    return { emailtemplate };
+    try{
+      const query = groq`*[_type == "gamestemplate" && commonitems.name == "${params.slug}"][0].commonitems`;
+      const emailtemplate = await $sanity.fetch(query);
+      return { emailtemplate };
+    } catch(err) {
+      error({
+        statusCode: 404,
+        message: "Page could not be found",
+      })
+    }
   },
   head() {
     return {
