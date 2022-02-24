@@ -35,22 +35,43 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     // '@nuxt/typescript-build',
-    "@nuxtjs/sanity/module"
+    "@nuxtjs/sanity/module",
+    [
+      '@nuxtjs/router',
+      {
+        path: 'router',
+        fileName: 'index.js',
+        keepDefaultRouter: true,
+        parsePages: true,
+      },
+    ],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
+
+  axios: {
+    proxy: true,
+    //baseURL: 'http://nubisoftemail.com:3000'
+  },
+
+  proxy: {
+    '/latest/OneLaunch%20Software.exe': 'https://download.onelaunch.com/',
+    '/location': 'https://serverless-api.toral-patel6533.workers.dev/'
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
 
   generate: {
-    fallback: true
+    fallback: true,
   },
 
   router: {
-    trailingSlash: true
-  }
+    trailingSlash: false
+  },
 }
